@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Res,
+} from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiNotFoundResponse,
@@ -7,6 +16,7 @@ import {
 } from '@nestjs/swagger';
 import { ApiResponse } from '@nestjs/swagger';
 import { CreateCatDto } from './models/dto/CreateCatDto';
+import { Response } from 'express';
 
 @ApiTags('cats')
 @Controller('cats')
@@ -44,7 +54,7 @@ export class AppController {
     type: CreateCatDto,
   })
   @ApiNotFoundResponse({
-    description: 'No cat find',
+    description: 'Cat not found',
   })
   @Get(':id')
   getById(@Param('id') id: string): any {
@@ -63,10 +73,18 @@ export class AppController {
 
   @ApiOkResponse({
     description: 'Delete a cat',
+    type: CreateCatDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'Cat not found',
   })
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: string, @Res() res: Response): CreateCatDto {
     const index = this._cache.findIndex((value) => value.id === id);
-    return this._cache.splice(index, 1);
+    if (index >= 0) {
+      return this._cache.splice(index, 1)[0];
+    } else {
+      res && res.status(HttpStatus.NOT_FOUND).send();
+    }
   }
 }
