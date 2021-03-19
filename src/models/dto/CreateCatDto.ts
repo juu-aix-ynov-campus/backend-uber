@@ -9,4 +9,7 @@ export class CreateCatDto {
 
   @ApiProperty()
   breed: string;
+
+  @ApiProperty()
+  id: string;
 }
