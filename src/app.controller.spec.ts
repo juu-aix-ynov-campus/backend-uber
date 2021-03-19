@@ -32,8 +32,10 @@ describe('AppController', () => {
           id: '3',
         }).name,
       ).toBe('Papou3');
+      expect(appController.get().length).toBe(3);
 
       expect(appController.delete('3', null).name).toBe('Papou3');
+      expect(appController.get().length).toBe(2);
     });
 
     it('delete Papou3 cat', () => {
