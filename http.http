@@ -3,16 +3,19 @@ GET http://localhost:1337/cats
 Accept: application/json
 
 ### GET request with a header
-GET http://localhost:1337/cats/12
+GET http://localhost:1337/cats/string
 Accept: application/json
+
+### delete a cat
+DELETE http://localhost:1337/cats/32
 
 ### POST request with a header
 POST http://localhost:1337/cats
-Accept: application/json
+Content-Type: application/json
 
 {
-      name: 'Papou3',
-      age: 2,
-      breed: 'Marseillais',
-      id: '3',
+  "name": "string",
+  "age": 0,
+  "breed": "string",
+  "id": "32"
 }
