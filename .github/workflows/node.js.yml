@@ -33,3 +33,7 @@ jobs:
       with:
         deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         publish_dir: ./coverage/lcov-report
+    - name: build docker image
+      run: |
+        docker build -t backend_uber .
+        docker image list
