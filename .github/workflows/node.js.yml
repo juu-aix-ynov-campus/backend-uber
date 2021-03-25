@@ -48,7 +48,11 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           echo ${{ secrets.PACKAGE_PUBLISH_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker stop backend_uber
+          docker rm backend_uber
+          docker rmi ghcr.io/juu-aix-ynov-campus/backend_uber:latest
           docker pull ghcr.io/juu-aix-ynov-campus/backend_uber:latest
           docker run --name backend_uber \
+          -d \
           -p 9876:1337/tcp \
           ghcr.io/juu-aix-ynov-campus/backend_uber:latest
