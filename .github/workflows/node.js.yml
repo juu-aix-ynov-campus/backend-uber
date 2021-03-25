@@ -49,3 +49,7 @@ jobs:
         script: |
           echo plop
           echo ${{ secrets.PACKAGE_PUBLISH_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker pull ghcr.io/juu-aix-ynov-campus/backend_uber:latest
+          docker run --name backend_uber \
+          -p 1337:1337/tcp \
+          ghcr.io/juu-aix-ynov-campus/backend_uber:latest
