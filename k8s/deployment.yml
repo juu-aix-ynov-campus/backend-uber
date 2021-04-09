@@ -13,7 +13,7 @@ spec:
         run: backend-uber-dep
     spec:
       imagePullSecrets:
-      - name: ndc-7t9d9
+      - name: ndc-mdmjx
       containers:
       - name: backend-uber
         imagePullPolicy: Always
