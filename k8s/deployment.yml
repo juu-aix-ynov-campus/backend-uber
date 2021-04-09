@@ -16,6 +16,7 @@ spec:
       - name: ndc-7t9d9
       containers:
       - name: backend-uber
+        imagePullPolicy: Always
         image: ghcr.io/juu-aix-ynov-campus/backend_uber:latest
         ports:
         - containerPort: 1337
