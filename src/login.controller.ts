@@ -59,9 +59,8 @@ export class LoginController {
     console.log(this._cache[0].id, id);
     const index = this._cache.findIndex((value) => value.id == id);
 
-    console.log(index);
     if (index >= 0) {
-      res.status(HttpStatus.OK).send(this._cache.splice(index, 1)[0])
+      res.status(HttpStatus.OK).send(this._cache.splice(index, 1)[0]);
     } else {
       res && res.status(HttpStatus.NOT_FOUND).send();
     }

@@ -1,8 +1,24 @@
-import { Body, Controller, Delete, HttpStatus, Param, Put, Res } from '@nestjs/common';
-import { ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Put,
+  Res,
+} from '@nestjs/common';
+import {
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import User from './models/dto/UserDto';
 import { CreateCatDto } from './models/dto/CreateCatDto';
 import { Response } from 'express';
+import CreateUserDto from './models/dto/CreateUserDto';
 
 @ApiTags('users')
 @Controller('users')
@@ -12,7 +28,7 @@ export class UsersController {
       name: 'Julien',
       lastname: 'Catania',
       city: 'Marseille',
-      id: 1337,
+      id: Math.floor(Math.random() * 999999),
       mail: 'jcatania@ynov.com',
       password: 'marco',
       phone: '0123456789',
@@ -25,27 +41,46 @@ export class UsersController {
 
   constructor() {}
 
-  @Put()
-  @ApiCreatedResponse({
-
+  @ApiOkResponse({
+    description: 'The record has been successfully created.',
+    type: User,
+    isArray: true,
   })
-  add(@Body() user: User) {
-    UsersController._cache.push(user);
+  @Get()
+  get(): any {
+    return UsersController._cache;
+  }
+
+  @ApiCreatedResponse({
+    description: 'User created',
+    type: User,
+  })
+  @Put()
+  add(@Body() user: CreateUserDto, @Res() res: Response) {
+    (user as User).id = Math.floor(Math.random() * 999999);
+    UsersController._cache.push(user as User);
+
+    delete user.password;
+
+    res.status(HttpStatus.CREATED).send(user);
   }
 
   @ApiOkResponse({
-    description: 'Delete a user',
+    description: 'User deleted',
     type: CreateCatDto,
   })
   @ApiNotFoundResponse({
-    description: 'User not logged',
+    description: 'User not found',
   })
   @Delete(':id')
-  logoff(@Param('id') id: number, @Res() res: Response) {
-    const index = UsersController._cache.findIndex((value) => value.id === id);
+  logoff(@Param('id') id: string, @Res() res: Response) {
+    const index = UsersController._cache.findIndex((value) => value.id === +id);
 
+    console.log(index);
     if (index >= 0) {
-      res && res.status(HttpStatus.OK).send();
+      res
+        .status(HttpStatus.OK)
+        .send(UsersController._cache.splice(index, 1)[0]);
     } else {
       res && res.status(HttpStatus.NOT_FOUND).send();
     }
