@@ -67,7 +67,7 @@ export class UsersController {
 
   @ApiOkResponse({
     description: 'User deleted',
-    type: CreateCatDto,
+    type: User,
   })
   @ApiNotFoundResponse({
     description: 'User not found',
@@ -78,9 +78,11 @@ export class UsersController {
 
     console.log(index);
     if (index >= 0) {
-      res
-        .status(HttpStatus.OK)
-        .send(UsersController._cache.splice(index, 1)[0]);
+      const toBeDeleted = UsersController._cache.splice(index, 1)[0];
+
+      delete toBeDeleted.password;
+
+      res.status(HttpStatus.OK).send(toBeDeleted);
     } else {
       res && res.status(HttpStatus.NOT_FOUND).send();
     }
