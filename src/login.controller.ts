@@ -17,6 +17,7 @@ import { Response } from 'express';
 import { CreateCatDto } from './models/dto/CreateCatDto';
 import { UsersController } from './users.controller';
 import User from './models/dto/UserDto';
+import LoginDto from './models/dto/LoginDto';
 
 @ApiTags('login')
 @Controller('login')
@@ -31,7 +32,7 @@ export class LoginController {
   })
   @Put()
   login(
-    @Body() login: { mail: string; password: string },
+    @Body() login: LoginDto,
     @Res() res: Response,
   ) {
     const tmp = UsersController._cache.find(
