@@ -14,7 +14,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Response } from 'express';
-import { CreateCatDto } from './models/dto/CreateCatDto';
 import { UsersController } from './users.controller';
 import User from './models/dto/UserDto';
 import LoginDto from './models/dto/LoginDto';
@@ -49,7 +48,7 @@ export class LoginController {
 
   @ApiOkResponse({
     description: 'Delete a logged user',
-    type: CreateCatDto,
+    type: User,
   })
   @ApiNotFoundResponse({
     description: 'User not logged',

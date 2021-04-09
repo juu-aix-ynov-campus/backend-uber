@@ -16,7 +16,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import User from './models/dto/UserDto';
-import { CreateCatDto } from './models/dto/CreateCatDto';
 import { Response } from 'express';
 import CreateUserDto from './models/dto/CreateUserDto';
 
