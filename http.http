@@ -1,21 +1,36 @@
-### GET request with a header
-GET http://localhost:1337/cats
-Accept: application/json
+### loggoff
+// @no-log
+DELETE {{hostname}}:{{port}}/login/1337
 
-### GET request with a header
-GET http://localhost:1337/cats/string
-Accept: application/json
+### delete a user
+// @no-log
+DELETE {{hostname}}:{{port}}/user/32
 
-### delete a cat
-DELETE http://localhost:1337/cats/32
-
-### POST request with a header
-POST http://localhost:1337/cats
+### Login
+// @no-log
+PUT {{hostname}}:{{port}}/login
 Content-Type: application/json
 
 {
-  "name": "string",
-  "age": 0,
-  "breed": "string",
-  "id": "32"
+  "mail": "jcatania@ynov.com",
+  "password": "marco"
+}
+
+### Login
+// @no-log
+PUT {{hostname}}:{{port}}/users
+Content-Type: application/json
+
+{
+  "name": "Julien",
+  "lastname": "Catania",
+  "city": "Marseille",
+  "id": 1337,
+  "mail": "jcatania@ynov.com",
+  "password": "marco",
+  "phone": "0123456789",
+  "role": "driver",
+  "siret": 421337,
+  "vehicule_class": "Super Driver",
+  "vehicule_registration": "SE777ES",
 }
